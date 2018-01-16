@@ -64,8 +64,8 @@ sys.dont_write_bytecode = False
 #
 #  Parse all requirements.
 #
-requirements = list(parse_requirements('requirements.txt'))
-dependencies = list(parse_requirements('requirements.txt', dep=True))
+requirements = list(parse_requirements('requirements/requirements.txt'))
+print(requirements)
 readme = read('README.md')
 
 setup(
@@ -91,8 +91,7 @@ setup(
     license='GPLv3',
     keywords='github automation bots',
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
-    install_requires=dependencies,
-    dependency_links=dependencies,
+    install_requires=requirements,
     include_package_data=True,
     zip_safe=True,
     platforms=['MacOS X', 'Linux'],
