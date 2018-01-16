@@ -1,4 +1,4 @@
-from itertools import cycle, count
+from itertools import cycle, count, chain
 from time import sleep
 import argparse
 from github3 import login
@@ -19,13 +19,15 @@ parser.add_argument('--version', action='version', version='%(prog)s {}'.format(
 def first_not(rota, user):
     """
     Return the first entry of rota not equal to user.
-    :param rota:
-    :param user:
-    :return:
+    :param rota: generator
+    :param user: str
+    :return: first value of rota != user, and rota with user prepended if they were originally next
     """
+    modified_rota = rota
     for rotad in rota:
         if rotad != user:
-            return rotad
+            return rotad, modified_rota
+        modified_rota = chain([user], rota)
 
 
 def main(looper=count(), args=None):
@@ -53,7 +55,7 @@ def main(looper=count(), args=None):
                     logging.info("Got {} unassigned open issues for {}".format(len(prs), repo))
                     for pr in prs:
                         pr_owner = pr.user.login
-                        next_assignee = first_not(user_rota, pr_owner)
+                        next_assignee, user_rota = first_not(user_rota, pr_owner)
                         logging.info("Assigning {} #{} to {}".format(repo, pr.number, next_assignee))
                         pr.assign(next_assignee)
                         logging.info("Assigned {} #{} to {}".format(repo.name, pr.number, next_assignee))

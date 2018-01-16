@@ -88,7 +88,7 @@ setup(
     author_email="jono@nanosheep.net",
     url='https://github.com/greenape/pullbot',
 
-    license="GPL 3",
+    license='GPLv3',
     keywords='github automation bots',
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
     install_requires=dependencies,
