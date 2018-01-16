@@ -2,14 +2,10 @@
 # -*- coding: utf-8 -*-
 '''
 Setup configuration for `pullbot`.
-
 '''
 import re
 import sys
 import versioneer
-
-from pullbot import __version__, __author__, __license__, __email__
-
 from os import path as p
 
 try:
@@ -75,7 +71,7 @@ readme = read('README.md')
 setup(
 
     name='pullbot',
-    version=__version__,
+    version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     description='GitHub PR automation',
     long_description=readme,
@@ -83,21 +79,22 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'pullbot = pullbot.pullbot:main'
+            'pullbot = pullbot.pullbot:main',
+            'pullbot-auth = pullbot.auth:main'
         ]
     },
 
-    author=__author__,
-    author_email=__email__,
+    author="Jonathan Gray",
+    author_email="jono@nanosheep.net",
     url='https://github.com/greenape/pullbot',
 
-    license=__license__,
-    keywords='cdr etl',
+    license="GPL 3",
+    keywords='github automation bots',
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
     install_requires=dependencies,
     dependency_links=dependencies,
     include_package_data=True,
-    zip_safe=False,
+    zip_safe=True,
     platforms=['MacOS X', 'Linux'],
     classifiers=[
         'Development Status :: 4 - Beta',

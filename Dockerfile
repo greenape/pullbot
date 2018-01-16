@@ -1,5 +1,5 @@
 FROM python:3-alpine
-MAINTAINER Jonathan Gray <jonathan.gray@flowminder.org>
+LABEL maintainer = "Jonathan Gray <jono@nanosheep.net>"
 COPY assigner.py /assigner.py
 COPY requirements.txt /requirements.txt
 RUN pip install --pre -r requirements.txt
