@@ -87,7 +87,7 @@ def main(looper=count(), args=None):
                         logging.info("Assigned {} #{} to {}".format(repo.name, pr.number, assignees))
             except Exception as e:
                 logging.error("Error talking to github, waiting a bit. Error was {}".format(e))
-            logging.info("Sleeping for 10 mins.")
+            logging.info("Sleeping for {}s.".format(args.poll_interval))
             sleep(args.poll_interval)
     except FileNotFoundError:
         logging.error("Couldn't find token file {}, do you need to run pullbot-auth?".format(args.token_file))
