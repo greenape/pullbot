@@ -3,6 +3,7 @@ from time import sleep
 import argparse
 from github3 import login
 import logging
+import warnings
 
 from pullbot.util import get_log_level
 from pullbot import __version__
@@ -57,7 +58,9 @@ def main(looper=count(), args=None):
     args.repos = set(args.repos)
     if(args.n_reviewers >= len(args.users)):
         parser.error("Number of assignees per PR is too high for number of reviewers.")
-
+    if(args.n_reviewers > 1):
+        warnings.warn("More than one asssignee not currently supported :(.")
+        args.n_reviewers = 1
     logging.basicConfig(level=get_log_level(args.verbosity), format='%(asctime)s %(name)s %(levelname)s %(message)s')
     try:
         logging.info("Starting assignerbot.")
@@ -83,7 +86,8 @@ def main(looper=count(), args=None):
                         assignees, user_rota = take_not(user_rota, pr_owner, args.n_reviewers)
                         assignees.update(args.mandatory_reviewers)
                         logging.info("Assigning {} #{} to {}".format(repo, pr.number, assignees))
-                        pr.edit(assignees=assignees)
+                        #pr.edit(assignees=assignees)
+                        pr.assign(assignees.pop()) # Disable multiply assigns while github3.py new release pending
                         logging.info("Assigned {} #{} to {}".format(repo.name, pr.number, assignees))
             except Exception as e:
                 logging.error("Error talking to github, waiting a bit. Error was {}".format(e))
