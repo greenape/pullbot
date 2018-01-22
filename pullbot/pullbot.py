@@ -81,7 +81,7 @@ def main(looper=count(), args=None):
                     for pr in prs:
                         pr_owner = pr.user.login
                         assignees, user_rota = take_not(user_rota, pr_owner, args.n_reviewers)
-                        assignees += args.mandatory_reviewers
+                        assignees.update(args.mandatory_reviewers)
                         logging.info("Assigning {} #{} to {}".format(repo, pr.number, assignees))
                         pr.edit(assignees=assignees)
                         logging.info("Assigned {} #{} to {}".format(repo.name, pr.number, assignees))
