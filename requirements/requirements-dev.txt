@@ -1,2 +1,2 @@
 pytest==3.3.2
-versioneer
+versioneer==0.18
