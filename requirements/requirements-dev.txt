@@ -1,2 +1,2 @@
-pytest==3.7.1
+pytest==5.4.2
 versioneer==0.18
